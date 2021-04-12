@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/admin_login.css" />
+</head>
+
+<body>
+    <div class="admin_login_wrap">
+        <h1>登录</h1>
+        <div class="adming_login_border">
+            <div class="admin_input">
+                <!-- <form action="index.html" method="post"> -->
+                <ul class="admin_items">
+                    <li style="height: 85px;">
+                        <label for="email">邮箱：</label>
+                        <input type="text" name="" value="" id="email" size="40" class="admin_input_style" />
+                    </li>
+                    <li style="height: 85px;">
+                        <label for="password">密码：</label>
+                        <input type="password" name="" value="" id="password" size="40" class="admin_input_style" />
+                    </li>
+                    <li style="height: 20px;margin-bottom: 5px;">
+                        <p id="yanzheng" style="color: red;display:none">用户名或密码错误</p>
+                    </li>
+                    <li style="height: 60px;">
+                        <input type="button" tabindex="3" id='loginBtn' value="登录" class="btn btn-primary" />
+                    </li>
+                </ul>
+                <!-- </form> -->
+            </div>
+        </div>
+        <p class="admin_copyright">
+
+        </p>
+    </div>
+</body>
+<script src="./assets/vendors/jquery/jquery.min.js"></script>
+<script>
+    //为登录按钮添加点击事件
+    $('#loginBtn').on('click', function() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        // 判断是否输入邮箱
+        if (email.trim().length == 0) {
+            alert('请输入邮箱')
+            return;
+        }
+        // 判断用户是否输入密码
+        if (password.trim().length == 0) {
+            alert('请输入密码')
+            return;
+        }
+        $.ajax({
+            type: 'post',
+            url: '/login',
+            data: {
+                email: email,
+                password: password
+            },
+            success: function(response) {
+                console.log(1);
+                $('#yanzheng').css('display', 'none');
+                // 登录成功 跳转到数据管理的首页面
+                location.href = 'index.html';
+            },
+            error: function() {
+                $('#yanzheng').css('display', 'inline');
+            }
+        })
+    })
+</script>
+
+</html>
